@@ -1,5 +1,5 @@
 _ > nanoagent.plugin.v0001.ProductConfig:
-tagline: "Book the flight that fits what you care about most"
+tagline: "Book the flight that aligns most with personal flight preferences"
 summary: "Tell us where and when you are flying, and how much a window or aisle seat, a daytime or red-eye departure, and a nonstop or connecting flight matter to you, as weights that add up to 100. An agent books the one-way flight and seat with the highest score on that day's flights, and the cheapest one when several score the same. Real airports and airline names; simulated fares, schedules and open seats. A deterministic verifier checks every booking against the same scoring rules."
 highlights:
   - "Weigh three preferences against each other: seat, time of day, and nonstop or connecting"
