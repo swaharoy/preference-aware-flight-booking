@@ -1,0 +1,49 @@
+{
+ "note": "The quickest flight of the day: total time is not a preference.",
+ "kind": "wrong",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "JFK",
+  "destination": "LAX",
+  "travel_date": "2026-12-03",
+  "seat_preference": "WINDOW",
+  "seat_weight": 20,
+  "time_preference": "RED_EYE",
+  "time_weight": 30,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 50
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-01",
+    "seat": "MIDDLE"
+   }
+  }
+ ],
+ "expect": {
+  "valid": false,
+  "score": 0.0,
+  "failed": [
+   "best-score"
+  ]
+ }
+}

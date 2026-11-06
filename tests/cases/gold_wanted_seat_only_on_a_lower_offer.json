@@ -1,0 +1,47 @@
+{
+ "note": "Los Angeles-Tokyo: a window seat is open only on offers that score lower; the best offer is booked without one.",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "LAX",
+  "destination": "NRT",
+  "travel_date": "2026-12-15",
+  "seat_preference": "WINDOW",
+  "seat_weight": 25,
+  "time_preference": "DAY",
+  "time_weight": 35,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 40
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261215-04",
+    "seat": "AISLE"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

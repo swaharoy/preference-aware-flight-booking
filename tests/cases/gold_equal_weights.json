@@ -1,0 +1,47 @@
+{
+ "note": "San Francisco-Singapore: aisle, red-eye and a connection, weighted 34/33/33 (as equal as whole percentages allow).",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "SFO",
+  "destination": "SIN",
+  "travel_date": "2026-12-03",
+  "seat_preference": "AISLE",
+  "seat_weight": 34,
+  "time_preference": "RED_EYE",
+  "time_weight": 33,
+  "stops_preference": "CONNECTING",
+  "stops_weight": 33
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-10",
+    "seat": "AISLE"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

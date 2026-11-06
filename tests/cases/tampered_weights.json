@@ -1,0 +1,68 @@
+{
+ "note": "The run's recorded weights are changed after get_trip.",
+ "kind": "tampered",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "ORD",
+  "destination": "LHR",
+  "travel_date": "2026-12-03",
+  "seat_preference": "WINDOW",
+  "seat_weight": 20,
+  "time_preference": "RED_EYE",
+  "time_weight": 30,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 50
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "tamper": {
+    "file": "trip.json",
+    "set": {
+     "request": {
+      "traveller_name": "Maya Chen",
+      "origin": "ORD",
+      "destination": "LHR",
+      "travel_date": "2026-12-03",
+      "seat_preference": "WINDOW",
+      "seat_weight": 50,
+      "time_preference": "RED_EYE",
+      "time_weight": 30,
+      "stops_preference": "NONSTOP",
+      "stops_weight": 20
+     }
+    }
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-10",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "valid": false,
+  "score": 0.0,
+  "failed": [
+   "this-run"
+  ]
+ }
+}

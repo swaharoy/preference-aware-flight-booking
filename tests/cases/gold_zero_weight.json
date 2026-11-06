@@ -1,0 +1,47 @@
+{
+ "note": "Boston-London: the seat weighs 0, so any open seat on the right offer is fine.",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "BOS",
+  "destination": "LHR",
+  "travel_date": "2026-12-03",
+  "seat_preference": "AISLE",
+  "seat_weight": 0,
+  "time_preference": "RED_EYE",
+  "time_weight": 40,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 60
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-10",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

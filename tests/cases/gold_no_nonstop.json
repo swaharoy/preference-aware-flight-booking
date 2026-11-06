@@ -1,0 +1,47 @@
+{
+ "note": "Nashville-Frankfurt: a nonstop is wanted (50) but none flies; the best is what the seat and time give.",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "BNA",
+  "destination": "FRA",
+  "travel_date": "2026-12-10",
+  "seat_preference": "WINDOW",
+  "seat_weight": 20,
+  "time_preference": "RED_EYE",
+  "time_weight": 30,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 50
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261210-07",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

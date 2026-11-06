@@ -1,0 +1,47 @@
+{
+ "note": "Weights 30/30/40 with stops at 40: the best booking meets the two 30s (60); no offer meets the 40 and a 30 together.",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "ATL",
+  "destination": "ORD",
+  "travel_date": "2026-12-16",
+  "seat_preference": "WINDOW",
+  "seat_weight": 30,
+  "time_preference": "DAY",
+  "time_weight": 30,
+  "stops_preference": "CONNECTING",
+  "stops_weight": 40
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261216-06",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

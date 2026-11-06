@@ -1,0 +1,35 @@
+{
+ "note": "A request from an airport to itself is refused.",
+ "kind": "malformed",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "ORD",
+  "destination": "ORD",
+  "travel_date": "2026-12-03",
+  "seat_preference": "WINDOW",
+  "seat_weight": 20,
+  "time_preference": "RED_EYE",
+  "time_weight": 30,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 50
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-01",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "error_contains": "both ORD"
+ }
+}

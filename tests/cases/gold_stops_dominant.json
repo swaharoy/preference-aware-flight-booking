@@ -1,0 +1,47 @@
+{
+ "note": "New York-Los Angeles: aisle 10, day 20, nonstop 70; no offer meets all three.",
+ "kind": "gold",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "JFK",
+  "destination": "LAX",
+  "travel_date": "2027-02-04",
+  "seat_preference": "AISLE",
+  "seat_weight": 10,
+  "time_preference": "DAY",
+  "time_weight": 20,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 70
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20270204-05",
+    "seat": "MIDDLE"
+   }
+  }
+ ],
+ "expect": {
+  "valid": true,
+  "score": 1.0,
+  "failed": []
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "note": "The cheaper nonstop, which meets nothing that matters.",
+ "kind": "boundary",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "ORD",
+  "destination": "LHR",
+  "travel_date": "2026-12-03",
+  "seat_preference": "WINDOW",
+  "seat_weight": 0,
+  "time_preference": "RED_EYE",
+  "time_weight": 0,
+  "stops_preference": "CONNECTING",
+  "stops_weight": 100
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-01",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "world": {
+  "route": [
+   "ORD",
+   "LHR"
+  ],
+  "offers": {
+   "2026-12-03": [
+    {
+     "offer_id": "20261203-01",
+     "carrier": "American Airlines",
+     "stops": 0,
+     "depart_local": "2026-12-03 21:30",
+     "arrive_local": "2026-12-04 11:30",
+     "total_minutes": 480,
+     "time_of_day": "RED_EYE",
+     "open_seats": [
+      "WINDOW",
+      "AISLE",
+      "MIDDLE"
+     ],
+     "fare_cents": 30000,
+     "segments": [
+      {
+       "origin": "ORD",
+       "destination": "LHR",
+       "flight_number": "AA 100",
+       "depart": "2026-12-04 03:30",
+       "arrive": "2026-12-04 11:30",
+       "air_minutes": 480
+      }
+     ]
+    },
+    {
+     "offer_id": "20261203-02",
+     "carrier": "American Airlines",
+     "stops": 1,
+     "depart_local": "2026-12-03 09:00",
+     "arrive_local": "2026-12-04 01:30",
+     "total_minutes": 630,
+     "time_of_day": "DAY",
+     "open_seats": [
+      "MIDDLE"
+     ],
+     "fare_cents": 90000,
+     "segments": [
+      {
+       "origin": "ORD",
+       "destination": "BOS",
+       "flight_number": "AA 200",
+       "depart": "2026-12-03 15:00",
+       "arrive": "2026-12-03 17:00",
+       "air_minutes": 120
+      },
+      {
+       "origin": "BOS",
+       "destination": "LHR",
+       "flight_number": "AA 201",
+       "depart": "2026-12-03 18:30",
+       "arrive": "2026-12-04 01:30",
+       "air_minutes": 420
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "expect": {
+  "valid": false,
+  "score": 0.0,
+  "failed": [
+   "best-score"
+  ]
+ }
+}

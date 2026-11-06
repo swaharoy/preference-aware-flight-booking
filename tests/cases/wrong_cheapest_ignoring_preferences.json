@@ -1,0 +1,49 @@
+{
+ "note": "Seattle-Boston: the cheapest offer of the day, whatever it scores.",
+ "kind": "wrong",
+ "task": "preference-aware-flight-booking",
+ "today": "2026-11-05",
+ "request": {
+  "traveller_name": "Maya Chen",
+  "origin": "SEA",
+  "destination": "BOS",
+  "travel_date": "2026-12-03",
+  "seat_preference": "AISLE",
+  "seat_weight": 40,
+  "time_preference": "DAY",
+  "time_weight": 25,
+  "stops_preference": "NONSTOP",
+  "stops_weight": 35
+ },
+ "steps": [
+  {
+   "tool": "get_trip",
+   "arguments": "$request",
+   "save_as": "trip"
+  },
+  {
+   "tool": "search_flights",
+   "save_as": "search",
+   "arguments": {
+    "run_id": "$ref:trip.run_id",
+    "origin": "$ref:trip.trip.origin.code",
+    "destination": "$ref:trip.trip.destination.code",
+    "travel_date": "$ref:trip.trip.travel_date"
+   }
+  },
+  {
+   "submit": {
+    "run_id": "$ref:trip.run_id",
+    "offer_id": "20261203-08",
+    "seat": "WINDOW"
+   }
+  }
+ ],
+ "expect": {
+  "valid": false,
+  "score": 0.0,
+  "failed": [
+   "best-score"
+  ]
+ }
+}
